@@ -1,0 +1,9 @@
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\bin\Debug\PruebaEPPlus.exe.config
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\bin\Debug\PruebaEPPlus.exe
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\bin\Debug\PruebaEPPlus.pdb
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\bin\Debug\EPPlus.dll
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\bin\Debug\EPPlus.xml
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.csproj.CoreCompileInputs.cache
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.exe
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.pdb
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.csprojResolveAssemblyReference.cache
