@@ -40,7 +40,7 @@ namespace PruebaEPPlus
             //Cliente.CargarArchivo();
 
             Salida salida = new Salida();
-            //salida.IniciarProcesoSalida();
+            salida.IniciarProcesoSalida();
 
             Entradas.LeerExcel leerExcel = new Entradas.LeerExcel();
             leerExcel.LeerExcelXLSX();

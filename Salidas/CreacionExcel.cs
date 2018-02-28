@@ -175,7 +175,7 @@ namespace PruebaEPPlus
             if (NuevoArchivo.Exists)
             {
                 NuevoArchivo.Delete();
-                NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel5.xls");
+                NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel9795.xls");
             }
                 Datos.TableName = "Polizas";
 
@@ -242,9 +242,10 @@ namespace PruebaEPPlus
                 //Set Defualt Page
                 (excelWorkBook.Sheets[1] as OfficeExcel._Worksheet).Activate();
 
-                //excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel7, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
-                excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel5, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
-                excelWorkBook.Close();
+            //excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel7, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
+            //excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel5, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
+            excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel9795, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
+            excelWorkBook.Close();
                 excelApp.Quit();            
         }
     }
