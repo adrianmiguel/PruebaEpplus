@@ -7,7 +7,8 @@ using System.Xml;
 using System.Drawing;
 using OfficeOpenXml.Style;
 using System.Data;
-using OfficeExcel = Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.ComponentModel;
 
 namespace PruebaEPPlus
 {
@@ -170,12 +171,12 @@ namespace PruebaEPPlus
         {
             ConexionBd conexion = new ConexionBd();
 
-            var NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel7Pass.xls");
+            var NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel7Pass2.xls");
 
             if (NuevoArchivo.Exists)
             {
                 NuevoArchivo.Delete();
-                NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel7Pass.xls");
+                NuevoArchivo = new FileInfo(RutaExcel + @"\xlExcel7Pass2.xls");
             }
                 Datos.TableName = "Polizas";
 
@@ -183,11 +184,11 @@ namespace PruebaEPPlus
 
                 System.Reflection.Missing Default = System.Reflection.Missing.Value;
 
-                OfficeExcel.Application excelApp = new OfficeExcel.Application();
-                OfficeExcel.Workbook excelWorkBook = excelApp.Workbooks.Add(1);
+                Excel.Application excelApp = new Excel.Application();
+                Excel.Workbook excelWorkBook = excelApp.Workbooks.Add(1);
 
                 //Create Excel WorkSheet
-                OfficeExcel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add(Default, excelWorkBook.Sheets[excelWorkBook.Sheets.Count], 1, Default);
+                Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add(Default, excelWorkBook.Sheets[excelWorkBook.Sheets.Count], 1, Default);
                 excelWorkSheet.Name = "Poliza";//Name worksheet
 
                 //Write Column Name
@@ -218,7 +219,7 @@ namespace PruebaEPPlus
                 //excelWorkSheet.Cells[1, 1] = "Greate Novels Of All Time";
 
                 //Style table column names
-                OfficeExcel.Range cellRang = excelWorkSheet.get_Range("A1", "W1");
+                Excel.Range cellRang = excelWorkSheet.get_Range("A1", "W1");
                 cellRang.Font.Bold = true;
                 cellRang.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
                 cellRang.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#00008B");
@@ -226,10 +227,10 @@ namespace PruebaEPPlus
                 cellRang.Font.Bold = true;
                 cellRang.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
                 cellRang.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#DAA520");
-                excelWorkSheet.get_Range("F4").EntireColumn.HorizontalAlignment = OfficeExcel.XlHAlign.xlHAlignRight;
+                excelWorkSheet.get_Range("F4").EntireColumn.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
                 //Formate price column
                 excelWorkSheet.get_Range("O2").EntireColumn.NumberFormat = "$#,##0.00_);[Red]($#,##0.00)"; //.NumberFormat = "0.00";
-                excelWorkSheet.get_Range("O2").EntireColumn.HorizontalAlignment = OfficeExcel.XlHAlign.xlHAlignRight;
+                excelWorkSheet.get_Range("O2").EntireColumn.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
                 //Auto fit columns
                 excelWorkSheet.Columns.AutoFit();
 
@@ -240,13 +241,138 @@ namespace PruebaEPPlus
                 excelApp.DisplayAlerts = true;
 
                 //Set Defualt Page
-                (excelWorkBook.Sheets[1] as OfficeExcel._Worksheet).Activate();
+                (excelWorkBook.Sheets[1] as Excel._Worksheet).Activate();
 
-            excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel7, Default, "123456", false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
+            excelWorkBook.SaveAs(NuevoArchivo, Excel.XlFileFormat.xlExcel7, Default, Default, false, Default, Excel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
             //excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel5, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
             //excelWorkBook.SaveAs(NuevoArchivo, OfficeExcel.XlFileFormat.xlExcel9795, Default, Default, false, Default, OfficeExcel.XlSaveAsAccessMode.xlNoChange, Default, Default, Default, Default, Default);
             excelWorkBook.Close();
                 excelApp.Quit();            
+        }
+
+        public void XLS(DirectoryInfo RutaExcel, DataTable Datos)
+        {
+            //BackgroundWorker bw = sender as BackgroundWorker;
+
+            Excel.Application excel = new Excel.Application();
+            Excel._Workbook libro = null;
+            Excel._Worksheet hoja = null;
+            Excel.Range rango = null;
+
+            try
+            {
+                //creamos un libro nuevo y la hoja con la que vamos a trabajar
+                libro = (Excel._Workbook)excel.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+                hoja = (Excel._Worksheet)libro.Worksheets.Add();
+                hoja.Name = "EJEMPLO";
+                ((Excel.Worksheet)excel.ActiveWorkbook.Sheets["Hoja1"]).Delete();   //Borramos la hoja que crea en el libro por defecto
+
+                //Montamos las cabeceras 
+                montaCabeceras(1, ref hoja, Datos);
+
+                //Rellenamos las celdas
+                int inColumn = 0, inRow = 0;
+                for (int m = 0; m < Datos.Rows.Count; m++)
+                {
+                    for (int n = 0; n < Datos.Columns.Count; n++)
+                    {
+                        inColumn = n + 1;
+                        inRow = 2 + m;//1 + 2 + m;
+                        hoja.Cells[inRow, inColumn] = Datos.Rows[m].ItemArray[n].ToString();
+                        if (m % 2 == 0)
+                            hoja.get_Range("A" + inRow.ToString(), "W" + inRow.ToString()).Interior.Color = System.Drawing.ColorTranslator.FromHtml("#DAA520");
+                    }
+                }
+
+                libro.Saved = true;
+                libro.SaveAs(Environment.CurrentDirectory + @"\Ejemplo.xlsx");  // Si es un libro nuevo
+
+                libro.Close();
+                releaseObject(libro);
+
+                excel.UserControl = false;
+                excel.Quit();
+                releaseObject(excel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error en creación/actualización del Ejemplo");
+
+                libro.Saved = true;
+                libro.SaveAs(Environment.CurrentDirectory + @"\Ejemplo.xlsx");
+                //    libro.Save();
+
+                libro.Close();
+                releaseObject(libro);
+
+                excel.UserControl = false;
+                excel.Quit();
+                releaseObject(excel);
+
+                System.Threading.Thread.Sleep(2000);
+            }
+
+            
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        private void montaCabeceras(int fila, ref Excel._Worksheet hoja, DataTable Datos)
+        {
+            try
+            {
+                //Excel.Range rango;
+
+                for (int i = 0; i < Datos.Columns.Count; i++)
+                    hoja.Cells[1, i + 1] = Datos.Columns[i].ColumnName;//.ToUpper();
+
+                //** Montamos el título en la línea 1 **
+                //hoja.Cells[1, 2] = "EJEMPLO DE CREACIÓN DE UN ARCHIVO EXCEL";
+
+                //** Montamos las cabeceras en la línea 3 **
+                //hoja.Cells[3, 2] = "Código";
+                //hoja.Cells[3, 3] = "Descripción";
+                //hoja.Cells[3, 4] = "Observaciones";
+
+                //Ponemos borde a las celdas
+                //rango = hoja.Range["B3", "D3"];
+                //rango.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+                ////Centramos los textos
+                //rango = hoja.Rows[3];
+                //rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                ////Modificamos los anchos de las columnas
+                //rango = hoja.Columns[1];
+                //rango.ColumnWidth = 1;
+                //rango = hoja.Columns[2];
+                //rango.ColumnWidth = 10;
+                //rango = hoja.Columns[3];
+                //rango.ColumnWidth = 20;
+                //rango = hoja.Columns[4];
+                //rango.ColumnWidth = 20;
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message, "Error de redondeo", MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

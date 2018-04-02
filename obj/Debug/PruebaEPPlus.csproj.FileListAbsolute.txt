@@ -7,3 +7,4 @@ C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\o
 C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.exe
 C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.pdb
 C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.csprojResolveAssemblyReference.cache
+C:\Users\adria\Documents\Visual Studio 2017\Projects\PruebaEPPlus\PruebaEPPlus\obj\Debug\PruebaEPPlus.csproj.CopyComplete

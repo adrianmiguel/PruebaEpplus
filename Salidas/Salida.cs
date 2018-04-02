@@ -50,7 +50,8 @@ namespace PruebaEPPlus
             {
                 if (true)
                 {
-                    creacionExcel.ExcelXLS(RutaSalida, DatosExcel, ConexionBd);
+                    //creacionExcel.ExcelXLS(RutaSalida, DatosExcel, ConexionBd);
+                    creacionExcel.XLS(RutaSalida, DatosExcel);
                 }
                 else
                 {
